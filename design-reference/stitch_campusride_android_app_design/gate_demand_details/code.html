@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary-fixed-dim": "#bcc7de", "on-tertiary": "#ffffff", "on-primary-container": "#f4fffc", "on-primary": "#ffffff", "on-primary-fixed": "#00201d", "on-tertiary-fixed-variant": "#3c475a", "outline": "#6d7a77", "surface-variant": "#d3e4fe", "on-tertiary-fixed": "#111c2d", "outline-variant": "#bcc9c6", "surface-container-low": "#eff4ff", "surface-tint": "#006a61", "primary": "#00685f", "surface-dim": "#cbdbf5", "primary-fixed": "#89f5e7", "tertiary": "#515c71", "on-background": "#0b1c30", "inverse-on-surface": "#eaf1ff", "secondary-fixed-dim": "#80d5cb", "on-tertiary-container": "#fefcff", "surface-container-high": "#dce9ff", "on-secondary": "#ffffff", "surface-container": "#e5eeff", "on-secondary-container": "#006f67", "on-surface-variant": "#3d4947", "primary-container": "#008378", "secondary": "#006a63", "error": "#ba1a1a", "error-container": "#ffdad6", "on-error-container": "#93000a", "inverse-primary": "#6bd8cb", "surface": "#f8f9ff", "on-error": "#ffffff", "surface-container-lowest": "#ffffff", "tertiary-fixed": "#d8e3fb", "tertiary-container": "#6a758a", "on-primary-fixed-variant": "#005049", "primary-fixed-dim": "#6bd8cb", "inverse-surface": "#213145", "surface-bright": "#f8f9ff", "on-secondary-fixed": "#00201d", "on-secondary-fixed-variant": "#00504a", "on-surface": "#0b1c30", "secondary-container": "#99efe5", "secondary-fixed": "#9cf2e8", "background": "#f8f9ff", "surface-container-highest": "#d3e4fe" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-lg": "1.25rem", "margin-lg": "1.5rem", "space-xl": "1.5rem", "gutter-sm": "0.75rem", "space-2xl": "2rem", "space-md": "1rem", "margin": "1rem", "space-xs": "0.5rem", "space-sm": "0.75rem", "gutter": "1rem", "space-2xs": "0.25rem" }, "fontFamily": { "display-lg": ["Inter"], "body-md": ["Inter"], "display-md": ["Inter"], "title-lg": ["Inter"], "headline-sm": ["Inter"], "body-lg": ["Inter"], "headline-lg": ["Inter"], "body-sm": ["Inter"], "label-md": ["Inter"], "title-md": ["Inter"], "label-lg": ["Inter"], "label-sm": ["Inter"] }, "fontSize": { "display-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "display-md": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "title-lg": ["18px", { "lineHeight": "24px", "fontWeight": "600" }], "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "title-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }] } } } };</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style></head><body class="bg-surface font-body-md text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-6 px-margin flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm select-none"><span>16:42</span><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[15px]">wifi</span><span class="material-symbols-outlined text-[15px]">signal_cellular_alt</span><span class="material-symbols-outlined text-[15px]">battery_full</span></div></div><div class="h-14 px-space-sm flex items-center justify-between"><div class="flex items-center gap-space-xs"><button aria-label="Navigate back" class="w-11 h-11 rounded-full flex items-center justify-center text-on-surface hover:bg-surface-container transition-colors" onclick="history.back()"><span class="material-symbols-outlined">arrow_back</span></button><img alt="CampusRide Logo" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCh4phxo50Iy-EHG9PcGIfw68_j9issk7Df9EUTM1_hK45h-rQSMa0LFSEISPFtAIdtPyVNsL58GOcj5_8SXsgHaf4Ru0NfmpUxpV0wriKL8vzhaCA9ZoiXs-DVJ3mKE6XkkR0zqAFITK6EsWcEY3i_hCuPNtkmLXz879343J4cIX0-fT-yBx7TMB-OLVeHghbIPLXJjTeOK2qLj94_Yg6p7jv_oWLZrjKrHr6NPPTSV5eWwnymumwh-g"/><h1 class="font-title-lg text-title-lg text-on-surface truncate ml-space-2xs">Trip Details</h1></div><div class="flex items-center gap-space-2xs"><button aria-label="Share ride" class="w-11 h-11 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container transition-colors"><span class="material-symbols-outlined">share</span></button><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxUpLvb7B2NAT4TDH-ZzqICcnl8DnVwnK6REG7TynO1nxWHmMKcrLot64p3ou9sViYPOfeeltf9U96D4_pO-sUHrsvJfx646wQP126zOtRAg-bmk56z71Ud4rX1mj1zf81ycxIMmAw0prtULqF0UZ4nTJ_02JbPVoLJ_UpuNdR-xPWVYs2EuBGXHip28SO3iD6Kom9U83lyN6bcmgQ216yFxD2cp_j_GESjW3CuNWp6xToGxVDCPCsXg"/></div></div></header><main class="flex-1 flex flex-col relative w-full pt-20 bg-surface min-h-screen"><div class="flex flex-col w-full pb-32">
+<!-- Interactive Live Status Ticker -->
+<div class="px-margin pt-space-xs pb-space-xs flex items-center justify-between">
+<div class="flex items-center gap-space-2xs text-on-surface-variant font-label-md text-label-md">
+<span class="inline-flex w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span>Live Model Refreshed 1m ago</span>
+</div>
+<span class="bg-surface-container-high text-on-surface-variant px-space-xs py-0.5 rounded-full font-label-sm text-label-sm">
+      Sensors Sync 99.4%
+    </span>
+</div>
+<div class="px-margin flex flex-col gap-space-md">
+<!-- Header Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-[0_1px_3px_rgba(15,23,42,0.05)] flex flex-col gap-space-sm">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="min-w-0">
+<div class="flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-primary text-[20px]">door_front</span>
+<span class="font-headline-sm text-headline-sm text-on-surface truncate">Gate 3 — North Main Quad</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+            Primary arterial gate serving Sciences, Arts &amp; Administration
+          </p>
+</div>
+<span class="shrink-0 px-2.5 py-1 rounded-full bg-[#EA580C] text-[#FFFFFF] font-label-sm text-label-sm shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">trending_up</span>
+          High Outflow Peak
+        </span>
+</div>
+<!-- Live Window Metric Bar -->
+<div class="bg-surface-container-low rounded-lg p-space-sm flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Departure Slot</span>
+<span class="font-title-md text-title-md text-on-surface">4:50 PM – 5:00 PM</span>
+</div>
+</div>
+<div class="text-right">
+<span class="inline-flex items-center gap-0.5 font-label-sm text-label-sm text-primary bg-primary-fixed/40 px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[12px]">sensors</span> Active Window
+          </span>
+</div>
+</div>
+<!-- Simulation Disclaimer Note -->
+<div class="flex items-start gap-space-xs bg-surface-container-lowest p-space-2xs rounded-lg">
+<span class="material-symbols-outlined text-tertiary text-[16px] shrink-0 mt-0.5">info</span>
+<p class="font-body-sm text-body-sm text-tertiary">
+          Outflow derived from student course enrollment timetables and historical gate optical sensors. Simulated research telemetry.
+        </p>
+</div>
+</div>
+<!-- Outflow Key Metrics Bento Grid -->
+<div class="grid grid-cols-3 gap-space-2xs">
+<!-- Metric 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-sm shadow-[0_1px_3px_rgba(15,23,42,0.05)] flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface-variant mb-1">
+<span class="font-label-sm text-label-sm">Est. Outflow</span>
+<span class="material-symbols-outlined text-[16px] text-primary">groups</span>
+</div>
+<div>
+<span class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">142</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">students/slot</span>
+</div>
+<div class="mt-2 pt-1.5 flex items-center gap-0.5 text-[#EA580C] font-label-sm text-label-sm bg-[#FFF7ED] px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-[12px]">north_east</span>
+<span>+38% vs base</span>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-sm shadow-[0_1px_3px_rgba(15,23,42,0.05)] flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface-variant mb-1">
+<span class="font-label-sm text-label-sm">Peak Surge</span>
+<span class="material-symbols-outlined text-[16px] text-[#DC2626]">crisis_alert</span>
+</div>
+<div>
+<span class="font-headline-lg text-headline-lg text-[#DC2626] font-bold tracking-tight">5:10</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">PM forecast</span>
+</div>
+<div class="mt-2 pt-1.5 font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-1.5 py-0.5 rounded truncate">
+          ~198 riders
+        </div>
+</div>
+<!-- Metric 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-sm shadow-[0_1px_3px_rgba(15,23,42,0.05)] flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface-variant mb-1">
+<span class="font-label-sm text-label-sm">Carpool Ready</span>
+<span class="material-symbols-outlined text-[16px] text-secondary">hail</span>
+</div>
+<div>
+<span class="font-headline-lg text-headline-lg text-secondary font-bold tracking-tight">8</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">live requests</span>
+</div>
+<div class="mt-2 pt-1.5 flex items-center gap-0.5 text-secondary font-label-sm text-label-sm bg-secondary-container/40 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-[12px]">bolt</span>
+<span>Fast match</span>
+</div>
+</div>
+</div>
+<!-- Time-Slot Demand Bar Chart / Histogram -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-[0_1px_3px_rgba(15,23,42,0.05)]">
+<div class="flex items-center justify-between mb-space-xs">
+<div>
+<h2 class="font-title-md text-title-md text-on-surface">Demand Across Evening Slots</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Interval aggregates (10-minute cadence)</p>
+</div>
+<div class="flex items-center gap-1.5 font-label-sm text-label-sm text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-[#EA580C]"></span> Current
+        </div>
+</div>
+<!-- SVG Native Bar Chart -->
+<div class="relative w-full pt-4 pb-1">
+<svg aria-label="Hourly departure volume chart" class="w-full h-44 overflow-visible" preserveaspectratio="none" role="img" viewbox="0 0 340 180">
+<!-- Background Grid lines -->
+<line stroke="#E2E8F0" stroke-dasharray="3,3" stroke-width="1" x1="0" x2="340" y1="30" y2="30"></line>
+<line stroke="#E2E8F0" stroke-dasharray="3,3" stroke-width="1" x1="0" x2="340" y1="80" y2="80"></line>
+<line stroke="#E2E8F0" stroke-dasharray="3,3" stroke-width="1" x1="0" x2="340" y1="130" y2="130"></line>
+<line stroke="#CBD5E1" stroke-width="1.5" x1="0" x2="340" y1="155" y2="155"></line>
+<!-- Y-axis guide labels -->
+<text class="text-[9px] font-sans" fill="#94A3B8" x="0" y="26">200</text>
+<text class="text-[9px] font-sans" fill="#94A3B8" x="0" y="76">100</text>
+<text class="text-[9px] font-sans" fill="#94A3B8" x="0" y="126">40</text>
+<!-- 4:20 PM: 35 (Low - Teal) -->
+<g class="cursor-pointer transition-opacity hover:opacity-80">
+<rect fill="#0D9488" height="27" rx="4" width="22" x="24" y="128"></rect>
+<text class="text-[10px] font-semibold" fill="#0F766E" text-anchor="middle" x="35" y="122">35</text>
+<text class="text-[9px]" fill="#64748B" text-anchor="middle" x="35" y="168">4:20</text>
+</g>
+<!-- 4:30 PM: 60 (Med - Amber) -->
+<g class="cursor-pointer transition-opacity hover:opacity-80">
+<rect fill="#D97706" height="47" rx="4" width="22" x="63" y="108"></rect>
+<text class="text-[10px] font-semibold" fill="#B45309" text-anchor="middle" x="74" y="102">60</text>
+<text class="text-[9px]" fill="#64748B" text-anchor="middle" x="74" y="168">4:30</text>
+</g>
+<!-- 4:40 PM: 95 (Med - Amber) -->
+<g class="cursor-pointer transition-opacity hover:opacity-80">
+<rect fill="#D97706" height="75" rx="4" width="22" x="102" y="80"></rect>
+<text class="text-[10px] font-semibold" fill="#B45309" text-anchor="middle" x="113" y="74">95</text>
+<text class="text-[9px]" fill="#64748B" text-anchor="middle" x="113" y="168">4:40</text>
+</g>
+<!-- 4:50 PM: 142 (High - Active Highlighted with Tooltip) -->
+<g class="cursor-pointer">
+<!-- Active column halo & indicator -->
+<rect class="filter drop-shadow-sm" fill="#EA580C" height="117" rx="5" width="26" x="139" y="38"></rect>
+<rect fill="none" height="121" opacity="0.4" rx="6" stroke="#EA580C" stroke-width="1.5" width="30" x="137" y="36"></rect>
+<!-- Floating Tooltip Pill -->
+<g transform="translate(152, 12)">
+<rect fill="#0B1C30" height="19" rx="9.5" width="76" x="-38" y="-12"></rect>
+<text class="text-[10px] font-semibold" fill="#FFFFFF" text-anchor="middle" x="0" y="2">142 Active</text>
+<path d="M-3,7 L0,10 L3,7 Z" fill="#0B1C30"></path>
+</g>
+<text class="text-[10px] font-bold" fill="#0B1C30" text-anchor="middle" x="152" y="168">4:50</text>
+</g>
+<!-- 5:00 PM: 175 (Critical - Crimson) -->
+<g class="cursor-pointer transition-opacity hover:opacity-80">
+<rect fill="#DC2626" height="135" rx="4" width="22" x="180" y="20"></rect>
+<text class="text-[10px] font-semibold" fill="#DC2626" text-anchor="middle" x="191" y="15">175</text>
+<text class="text-[9px]" fill="#64748B" text-anchor="middle" x="191" y="168">5:00</text>
+</g>
+<!-- 5:10 PM: 198 (Critical - Crimson Peak) -->
+<g class="cursor-pointer transition-opacity hover:opacity-80">
+<rect fill="#DC2626" height="151" rx="4" width="22" x="219" y="4"></rect>
+<text class="text-[10px] font-bold" fill="#991B1B" text-anchor="middle" x="230" y="-1">198</text>
+<text class="text-[9px]" fill="#64748B" text-anchor="middle" x="230" y="168">5:10</text>
+</g>
+<!-- 5:20 PM: 85 (Med - Amber) -->
+<g class="cursor-pointer transition-opacity hover:opacity-80">
+<rect fill="#D97706" height="67" rx="4" width="22" x="258" y="88"></rect>
+<text class="text-[10px] font-semibold" fill="#B45309" text-anchor="middle" x="269" y="82">85</text>
+<text class="text-[9px]" fill="#64748B" text-anchor="middle" x="269" y="168">5:20</text>
+</g>
+<!-- 5:30 PM: 40 (Low - Teal) -->
+<g class="cursor-pointer transition-opacity hover:opacity-80">
+<rect fill="#0D9488" height="31" rx="4" width="22" x="297" y="124"></rect>
+<text class="text-[10px] font-semibold" fill="#0F766E" text-anchor="middle" x="308" y="118">40</text>
+<text class="text-[9px]" fill="#64748B" text-anchor="middle" x="308" y="168">5:30</text>
+</g>
+</svg>
+</div>
+<!-- Legend Pill Indicators -->
+<div class="mt-4 pt-3 flex items-center justify-between px-1 bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-1">
+<span class="w-2.5 h-2.5 rounded-sm bg-[#0D9488]"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Low (&lt;50)</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2.5 h-2.5 rounded-sm bg-[#D97706]"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Med (50-100)</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2.5 h-2.5 rounded-sm bg-[#EA580C]"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">High</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2.5 h-2.5 rounded-sm bg-[#DC2626]"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Surge</span>
+</div>
+</div>
+</div>
+<!-- Ranked Top Transit Hub Destinations -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between px-space-2xs">
+<h2 class="font-title-md text-title-md text-on-surface">Top Transit Hub Destinations</h2>
+<span class="font-label-sm text-label-sm text-primary">From Gate 3</span>
+</div>
+<!-- Destination 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-[0_1px_3px_rgba(15,23,42,0.05)] flex flex-col gap-space-xs">
+<div class="flex items-start justify-between">
+<div class="flex items-start gap-space-sm">
+<span class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-sm text-label-sm font-bold shrink-0 mt-0.5">
+              1
+            </span>
+<div>
+<div class="flex items-center gap-space-2xs">
+<span class="font-title-md text-title-md text-on-surface font-semibold">Central Metro Station</span>
+<span class="material-symbols-outlined text-primary text-[18px]">directions_subway</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Transit Hub 1 · Direct Rapid Line</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-title-lg text-title-lg text-primary font-bold">65%</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">~92 riders</span>
+</div>
+</div>
+<!-- Progress Bar Visual -->
+<div class="w-full bg-surface-container rounded-full h-2 overflow-hidden">
+<div class="bg-primary h-2 rounded-full" style="width: 65%"></div>
+</div>
+<!-- Micro-Status Badge -->
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-1 text-on-secondary-container bg-secondary-container px-2 py-0.5 rounded-full font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[13px]">group_add</span>
+<span>4 shared groups forming now</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">av_timer</span> 6m avg wait
+          </span>
+</div>
+</div>
+<!-- Destination 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-[0_1px_3px_rgba(15,23,42,0.05)] flex flex-col gap-space-xs">
+<div class="flex items-start justify-between">
+<div class="flex items-start gap-space-sm">
+<span class="w-6 h-6 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-label-sm text-label-sm font-bold shrink-0 mt-0.5">
+              2
+            </span>
+<div>
+<div class="flex items-center gap-space-2xs">
+<span class="font-title-md text-title-md text-on-surface font-semibold">Univ City Train Terminal</span>
+<span class="material-symbols-outlined text-tertiary text-[18px]">train</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Transit Hub 2 · Regional Commuter</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-title-lg text-title-lg text-on-surface font-bold">25%</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">~36 riders</span>
+</div>
+</div>
+<!-- Progress Bar Visual -->
+<div class="w-full bg-surface-container rounded-full h-2 overflow-hidden">
+<div class="bg-secondary h-2 rounded-full" style="width: 25%"></div>
+</div>
+<!-- Micro-Status Badge -->
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-1 text-on-secondary-container bg-secondary-container/50 px-2 py-0.5 rounded-full font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[13px]">person_check</span>
+<span>2 shared groups forming</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">av_timer</span> 11m avg wait
+          </span>
+</div>
+</div>
+<!-- Destination 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-[0_1px_3px_rgba(15,23,42,0.05)] flex flex-col gap-space-xs">
+<div class="flex items-start justify-between">
+<div class="flex items-start gap-space-sm">
+<span class="w-6 h-6 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-label-sm text-label-sm font-bold shrink-0 mt-0.5">
+              3
+            </span>
+<div>
+<div class="flex items-center gap-space-2xs">
+<span class="font-title-md text-title-md text-on-surface font-semibold">Downtown Center Square</span>
+<span class="material-symbols-outlined text-tertiary text-[18px]">location_city</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Transit Hub 4 · City Express</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-title-lg text-title-lg text-on-surface-variant font-bold">10%</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">~14 riders</span>
+</div>
+</div>
+<!-- Progress Bar Visual -->
+<div class="w-full bg-surface-container rounded-full h-2 overflow-hidden">
+<div class="bg-tertiary-container h-2 rounded-full" style="width: 10%"></div>
+</div>
+<!-- Micro-Status Badge -->
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Direct bus loop arriving 4:58 PM</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">av_timer</span> 15m avg wait
+          </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Persistent Floating Bottom Action Container -->
+<div class="fixed bottom-0 left-0 right-0 z-40 bg-surface-container-lowest/95 backdrop-blur-md px-margin py-space-sm shadow-[0_-8px_24px_-4px_rgba(15,23,42,0.08)] pb-safe">
+<div class="flex flex-col gap-space-xs max-w-lg mx-auto">
+<!-- Primary Request Button -->
+<button class="w-full h-[52px] rounded-full bg-primary hover:bg-[#005049] active:scale-[0.98] transition-all flex items-center justify-center gap-space-xs text-on-primary font-label-lg text-label-lg shadow-sm" id="requestSharedRideBtn">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+<span>Request Shared Ride from Gate 3</span>
+</button>
+<!-- Secondary Return Button -->
+<button class="w-full h-11 rounded-full bg-surface-container hover:bg-surface-container-high active:scale-[0.98] transition-all flex items-center justify-center gap-space-2xs text-on-surface font-label-lg text-label-lg" onclick="history.back()">
+<span class="material-symbols-outlined text-[18px]">map</span>
+<span>Return to Campus Map</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+  // Simple micro-interaction for ride request feedback
+  const btn = document.getElementById('requestSharedRideBtn');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const originalContent = btn.innerHTML;
+      btn.innerHTML = `
+        <span class="material-symbols-outlined text-[20px] animate-spin">progress_activity</span>
+        <span>Finding Carpool matches...</span>
+      `;
+      btn.classList.add('opacity-90');
+      setTimeout(() => {
+        btn.innerHTML = `
+          <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+          <span>Matched with 3 Students!</span>
+        `;
+        btn.classList.remove('bg-primary');
+        btn.classList.add('bg-secondary');
+        setTimeout(() => {
+          btn.innerHTML = originalContent;
+          btn.classList.remove('bg-secondary', 'opacity-90');
+          btn.classList.add('bg-primary');
+        }, 2400);
+      }, 900);
+    });
+  }
+</script></main></body></html>

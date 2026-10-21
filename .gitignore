@@ -1,0 +1,33 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Firebase & Cloud Functions
+functions/node_modules/
+functions/.runtimeconfig.json
+functions/*.log
+.firebase/
+service-account*.json
+*.pem
+*.key
+
+# Secrets and local environment files
+.env
+.env.*
+!.env.example
+google-services.json
+*.jks
+*.keystore
+secrets/

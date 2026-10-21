@@ -1,0 +1,47 @@
+day,slot_start,slot_end,estimated_outflow,distinct_classes,quality_flag,notes
+Monday,09:00,09:10,120,2,CONFIRMED,"Estimated dismissal from 2 class(es): CVT TUT (nan), CNT i (nan)"
+Monday,10:00,10:10,60,1,CONFIRMED,Estimated dismissal from 1 class(es): CVT (nan)
+Monday,11:00,11:10,420,7,CONFIRMED,"Estimated dismissal from 7 class(es): ML (nan), SSSOM (nan), i eee ACAD (nan), DLD (nan), DL (nan) and 2 more"
+Monday,12:00,12:10,120,2,CONFIRMED,"Estimated dismissal from 2 class(es): SSSOM (nan), DAA (nan)"
+Monday,13:00,13:10,120,2,CONFIRMED,"Estimated dismissal from 2 class(es): IAD (nan), BI (nan)"
+Monday,14:00,14:10,120,2,CONFIRMED,"Estimated dismissal from 2 class(es): MDRIIA  C-803 (nan), SE (nan)"
+Monday,15:00,15:10,360,6,CONFIRMED,"Estimated dismissal from 6 class(es): SE (nan), cD (nan), ML (B2), COURSERA (nan), BI (nan) and 1 more"
+Monday,16:00,16:10,60,1,CONFIRMED,Estimated dismissal from 1 class(es): NLP (nan)
+Monday,17:00,17:10,60,1,CONFIRMED,Estimated dismissal from 1 class(es): DAA (nan)
+Monday,18:00,18:10,60,1,CONFIRMED,Estimated dismissal from 1 class(es): OE I (nan)
+Monday,19:00,19:10,240,4,CONFIRMED,"Estimated dismissal from 4 class(es): Faculty name (nan), Faculty Name (nan), Subject Initials (nan), Faculty name i (nan)"
+Monday,22:00,22:10,60,1,CONFIRMED,Estimated dismissal from 1 class(es): MAD (nan)
+Tuesday,10:00,10:10,120,2,CONFIRMED,"Estimated dismissal from 2 class(es): SE   2 (nan), IVP   Bl (nan)"
+Tuesday,11:00,11:10,120,2,CONFIRMED,"Estimated dismissal from 2 class(es): Al   Bl (nan), Os (B2)"
+Tuesday,12:00,12:10,60,1,CONFIRMED,Estimated dismissal from 1 class(es): UVA (nan)
+Tuesday,13:00,13:10,120,2,CONFIRMED,"Estimated dismissal from 2 class(es): VA (nan), Sol  ab (nan)"
+Tuesday,15:00,15:10,240,4,CONFIRMED,"Estimated dismissal from 4 class(es): BI (nan), ifs (nan), os (nan), SE (nan)"
+Tuesday,16:00,16:10,60,1,CONFIRMED,Estimated dismissal from 1 class(es): Al (nan)
+Tuesday,17:00,17:10,60,1,CONFIRMED,Estimated dismissal from 1 class(es): OE-1 (nan)
+Tuesday,18:00,18:10,60,1,CONFIRMED,Estimated dismissal from 1 class(es): OF (nan)
+Wednesday,09:00,09:10,120,2,CONFIRMED,"Estimated dismissal from 2 class(es): CVT (nan), DSA oyle     Di  ek (nan)"
+Wednesday,10:00,10:10,240,4,CONFIRMED,"Estimated dismissal from 4 class(es): ML sPu (nan), MAD (nan), col (nan), Ww  K   F (nan)"
+Wednesday,11:00,11:10,360,6,CONFIRMED,"Estimated dismissal from 6 class(es): MAD (B2+C2), OR (nan), CNT (nan), DSA DJO (nan), SE (nan) and 1 more"
+Wednesday,12:00,12:10,180,3,CONFIRMED,"Estimated dismissal from 3 class(es): Al  ML (nan), NS (nan), DAA (nan)"
+Wednesday,13:00,13:10,480,8,CONFIRMED,"Estimated dismissal from 8 class(es): SSSOM (nan), ns (nan), AI  ML (nan), ss (nan), VA (nan) and 3 more"
+Wednesday,14:00,14:10,240,4,CONFIRMED,"Estimated dismissal from 4 class(es): SE (nan), DLD (nan), SNS (nan), PAALA (nan)"
+Wednesday,15:00,15:10,600,10,CONFIRMED,"Estimated dismissal from 10 class(es): SSSOM (B2), DAA   BL (nan), Os (nan), SE  CR-5S02 (nan), CF (nan) and 5 more"
+Wednesday,16:00,16:10,60,1,CONFIRMED,Estimated dismissal from 1 class(es): LR (nan)
+Wednesday,17:00,17:10,180,3,CONFIRMED,"Estimated dismissal from 3 class(es): BS (nan), OE (nan), ATSASAP (nan)"
+Wednesday,18:00,18:10,60,1,CONFIRMED,Estimated dismissal from 1 class(es): OE-1 (nan)
+Wednesday,19:00,19:10,120,2,CONFIRMED,"Estimated dismissal from 2 class(es): Subject details (nan), Subje (nan)"
+Wednesday,20:00,20:10,60,1,CONFIRMED,Estimated dismissal from 1 class(es): Faculty Name (nan)
+Wednesday,22:00,22:10,60,1,CONFIRMED,Estimated dismissal from 1 class(es): MAD (nan)
+Thursday,10:00,10:10,60,1,CONFIRMED,Estimated dismissal from 1 class(es): cp (nan)
+Thursday,12:00,12:10,60,1,CONFIRMED,Estimated dismissal from 1 class(es): pote (nan)
+Thursday,13:00,13:10,300,5,CONFIRMED,"Estimated dismissal from 5 class(es): MDRIIA (nan), CD (B2), r rt 4  5  i (nan), OR (nan), FOMLMTI (nan)"
+Thursday,14:00,14:10,180,3,CONFIRMED,"Estimated dismissal from 3 class(es): IVP (nan), OS (nan), AAIKMA (nan)"
+Thursday,15:00,15:10,180,3,CONFIRMED,"Estimated dismissal from 3 class(es): MWA (nan), Al  El (nan), Os (E2)"
+Thursday,16:00,16:10,120,2,CONFIRMED,"Estimated dismissal from 2 class(es): BS (nan), Al (nan)"
+Thursday,17:00,17:10,300,5,CONFIRMED,"Estimated dismissal from 5 class(es): DT (B2), MWA vTH (nan), MDRIIA (nan), OE-11 (nan), OE Il (nan)"
+Thursday,18:00,18:10,120,2,CONFIRMED,"Estimated dismissal from 2 class(es): OE Il (nan), VCCSBH (nan)"
+Friday,09:00,09:10,60,1,CONFIRMED,Estimated dismissal from 1 class(es): CVT NGU (nan)
+Friday,11:00,11:10,120,2,CONFIRMED,"Estimated dismissal from 2 class(es): MAD (nan), DSA (nan)"
+Friday,12:00,12:10,60,1,CONFIRMED,Estimated dismissal from 1 class(es): MAD (nan)
+Friday,13:00,13:10,240,4,CONFIRMED,"Estimated dismissal from 4 class(es): OS (nan), Al (B2), ACAD (D1), Al (nan)"
+Friday,16:00,16:10,60,1,CONFIRMED,Estimated dismissal from 1 class(es): IVP AVB (nan)

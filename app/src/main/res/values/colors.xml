@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand Primary Colors -->
+    <color name="primary">#00685F</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="primary_container">#CCFBF1</color>
+    <color name="on_primary_container">#00201D</color>
+
+    <!-- Secondary Accent Colors -->
+    <color name="secondary">#006A63</color>
+    <color name="on_secondary">#FFFFFF</color>
+    <color name="secondary_container">#99EFE5</color>
+    <color name="on_secondary_container">#006F67</color>
+
+    <!-- Background & Surface Palette -->
+    <color name="background">#F8FAFC</color>
+    <color name="on_background">#0F172A</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_dim">#CBDBF5</color>
+    <color name="surface_variant">#F1F5F9</color>
+    <color name="surface_container_lowest">#FFFFFF</color>
+    <color name="surface_container_low">#EFF4FF</color>
+    <color name="surface_container">#E5EEFF</color>
+    <color name="surface_container_high">#DCE9FF</color>
+    <color name="on_surface">#0F172A</color>
+    <color name="on_surface_variant">#3D4947</color>
+    <color name="outline">#6D7A77</color>
+    <color name="outline_variant">#BCC9C6</color>
+
+    <!-- Input Control Palette for High Contrast & Readability -->
+    <color name="input_bg">#F1F5F9</color>
+    <color name="input_border">#94A3B8</color>
+    <color name="input_border_focused">#00685F</color>
+    <color name="input_text_hint">#64748B</color>
+
+    <!-- Demand Status Palette -->
+    <color name="demand_low_bg">#F0FDFA</color>
+    <color name="demand_low_text">#0D9488</color>
+    <color name="demand_medium_bg">#FFFBEB</color>
+    <color name="demand_medium_text">#D97706</color>
+    <color name="demand_high_bg">#FFF7ED</color>
+    <color name="demand_high_text">#EA580C</color>
+    <color name="demand_critical_bg">#FEF2F2</color>
+    <color name="demand_critical_text">#DC2626</color>
+
+    <!-- Standard System Colors -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="error">#DC2626</color>
+    <color name="error_container">#FEF2F2</color>
+    <color name="on_error_container">#93000A</color>
+</resources>

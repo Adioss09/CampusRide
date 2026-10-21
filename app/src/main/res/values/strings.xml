@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">CampusRide</string>
+    <string name="app_subtitle">University Mobility &amp; Ride Sharing</string>
+
+    <!-- Navigation Labels -->
+    <string name="nav_home">Home</string>
+    <string name="nav_map">Map</string>
+    <string name="nav_ride_share">Ride Share</string>
+    <string name="nav_profile">Profile</string>
+
+    <!-- Sign In Screen -->
+    <string name="welcome_title">CampusRide</string>
+    <string name="welcome_subtitle">Intelligent Campus Mobility &amp; Peer Carpooling</string>
+    <string name="google_sign_in">Sign in with Google</string>
+    <string name="sign_in_disclaimer">Connected to Firebase Authentication sandbox. Only official university Google accounts recommended.</string>
+
+    <!-- Home Tab -->
+    <string name="greeting_default">Hi there 👋</string>
+    <string name="user_academic_info">Computer Science \'25 • Verified Student</string>
+    <string name="outflow_demand_title">Overall Outflow Demand</string>
+    <string name="departure_window_title">Departure Window</string>
+    <string name="live_model_note">Simulated Model Data • Derived from course schedules</string>
+
+    <!-- Ride Share Tab -->
+    <string name="peer_carpool_hub">Peer Carpool Hub</string>
+    <string name="coordinate_rides_title">Coordinate Rides to Transit Hubs</string>
+    <string name="coordinate_rides_subtitle">Team up with verified classmates, split taxi fares, and share rides off campus.</string>
+    <string name="pickup_gate_label">1. Pickup Campus Gate</string>
+    <string name="destination_hub_label">2. External Transit Hub</string>
+    <string name="departure_slot_label">3. Departure Window</string>
+    <string name="share_toggle_label">Split Rides with Classmates</string>
+    <string name="share_toggle_desc">Enable automated matching with verified students travelling to the same terminal.</string>
+    <string name="submit_ride_request">Submit Ride-Sharing Request</string>
+
+    <!-- Profile Tab -->
+    <string name="request_history_title">Request History</string>
+    <string name="verified_student">Verified Student</string>
+    <string name="sign_out">Sign Out</string>
+    
+    <string name="google_maps_key">AIzaSyBBg4XB0qpgRR6QmEhv1OA43MlZ0FSbOeE</string>
+
+</resources>
