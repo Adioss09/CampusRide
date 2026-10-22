@@ -93,7 +93,7 @@
                     android:popupBackground="@color/surface"
                     android:spinnerMode="dropdown" />
 
-                <!-- 3. Departure Window Dropdown -->
+                <!-- 3. Departure Window Time Picker -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -103,14 +103,24 @@
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
-                <Spinner
-                    android:id="@+id/spDepartureSlot"
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSelectDepartureTime"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="6dp"
-                    android:background="@drawable/bg_spinner"
-                    android:popupBackground="@color/surface"
-                    android:spinnerMode="dropdown" />
+                    android:gravity="start|center_vertical"
+                    android:paddingHorizontal="14dp"
+                    android:text="Select Departure Time (e.g., 4:50 PM)"
+                    android:textColor="@color/on_surface"
+                    android:textSize="14sp"
+                    app:cornerRadius="12dp"
+                    app:icon="@drawable/ic_search"
+                    app:iconGravity="start"
+                    app:iconSize="20dp"
+                    app:iconTint="@color/primary"
+                    app:strokeColor="@color/input_border"
+                    app:strokeWidth="1.5dp" />
 
                 <!-- 4. Willing to Share Toggle -->
                 <LinearLayout

@@ -2,46 +2,35 @@
 
 CampusRide is a native Android campus ride-sharing application designed
 to help students coordinate rides between campus gates and nearby
-public-transport hubs.
+public-transport hubs, featuring real-time driver dispatching and map-first navigation.
 
 ## Features
 
--   **Firebase Authentication** for student sign-in.
--   **Google Maps integration** for viewing campus locations and transit
-    hubs.
--   **Ride requests** with pickup gate, destination hub, departure slot,
-    and ride-sharing preference.
--   **Ride status management** for viewing and cancelling ride requests.
--   **Profile and ride history** backed by Cloud Firestore.
--   **Campus-focused locations** for nearby university gates and transit
-    connections.
--   **Teal-and-white interface** designed for a clear, student-friendly
-    experience.
+-   **Firebase Authentication** for student and driver sign-in.
+-   **Google Maps Integration** for viewing campus pickup gates, transit hubs, and route previews.
+-   **Flexible Ride Requests** with pickup gate, destination hub, native time-picker departure selection, and carpool sharing preference.
+-   **Real-Time Driver Console & Map-First Dispatch** featuring live pending ride streams, concurrency-safe atomic transactions for claiming rides, rejection filtering, and Google Maps turn-by-turn driving directions intent.
+-   **Real-Time Student Ride Status** updates via Cloud Firestore snapshot listeners (`PENDING`, `MATCHED / Driver Assigned`, `CANCELLED`).
+-   **Push Notifications Infrastructure** powered by Firebase Cloud Messaging (FCM) and Cloud Functions v2.
+-   **Profile and Ride History** backed by Cloud Firestore.
+-   **Teal-and-white Interface** designed for high contrast, accessibility, and clean student/driver separation.
 
 ## Tech Stack
 
--   **Android:** Java, XML layouts, Android Studio
+-   **Android:** Java, XML layouts, Material Design 3, Android Studio
 -   **Build system:** Gradle (Kotlin DSL)
--   **Backend and authentication:** Firebase Authentication, Cloud
-    Firestore
--   **Maps:** Google Maps SDK for Android
--   **Intelligent demand prioritization:** Existing Python
-    model/integration used by the project
-
-## Project Structure
-
-The repository contains the Android application and supporting project
-files. Check the folders and configuration files in the repository for
-the current implementation details.
+-   **Backend & Authentication:** Firebase Authentication, Cloud Firestore
+-   **Push Notifications:** Firebase Cloud Messaging (FCM) & Node.js Cloud Functions v2
+-   **Maps & Navigation:** Google Maps SDK for Android & Google Maps Driving Directions Intent
 
 ## Getting Started
 
 ### Prerequisites
 
 -   Android Studio
--   A compatible Android SDK (the app's minimum SDK is API 26)
--   Access to the Firebase project configured for CampusRide
--   A Google Maps API key with the required Maps SDK enabled
+-   A compatible Android SDK (minimum SDK API 26)
+-   Access to the Firebase project configured for CampusRide (`campusride-126f0`)
+-   A Google Maps API key with Maps SDK for Android enabled
 
 ### Setup
 
@@ -56,42 +45,17 @@ the current implementation details.
 
 3.  Configure Firebase for your development environment:
 
-    -   Add the appropriate `google-services.json` file to the Android
-        app module if it is required by the project configuration.
-    -   Ensure Firebase Authentication and Cloud Firestore are
-        configured in the Firebase project.
-    -   Use the project's intended, secure Firestore rules. Do not use
-        open read/write rules.
+    -   Ensure `app/google-services.json` is present.
+    -   Configure Firebase Authentication (Google Sign-In) and Cloud Firestore in Firebase Console.
+    -   Deploy security rules from `firestore.rules`.
+    -   To designate a driver account, create document `driver_roles/{driver_uid}` with field `isDriver = true` in Firestore (or set field `role = "driver"` in `users/{driver_uid}`).
 
 4.  Configure Google Maps:
 
-    -   Add your own Maps SDK API key using the configuration expected
-        by the project.
-    -   Restrict the key appropriately in Google Cloud Console.
-    -   Do not commit private credentials or local secrets.
+    -   Ensure your Maps SDK API key is set in `res/values/strings.xml` or local properties.
+    -   Restrict key in Google Cloud Console appropriately.
 
 5.  Build and run the app on an emulator or Android device.
-
-> Setup details can vary depending on the Firebase and Maps
-> configuration used by your environment. Never publish service-account
-> private keys, signing keys, or other sensitive credentials.
-
-## Firebase Notes
-
-CampusRide uses Firebase Authentication and Cloud Firestore. Some
-Firebase resources and security rules are configured in the Firebase
-console and are not automatically created by cloning this repository.
-Confirm that your Firebase project, authentication providers, database,
-and security rules are configured before running the app.
-
-## Development
-
--   Keep secrets and machine-specific configuration out of version
-    control.
--   Test authentication, maps, ride creation, ride cancellation, profile
-    loading, and ride history after making changes.
--   Verify backend-dependent features in the configured Firebase
-    environment.
 
 ## Repository
 
@@ -99,6 +63,4 @@ GitHub: https://github.com/Adioss09/CampusRide
 
 ## License
 
-No license is specified yet. Unless a license is added to this
-repository, standard copyright applies and reuse is not automatically
-permitted.
+No license is specified yet.

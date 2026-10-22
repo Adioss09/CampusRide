@@ -10,18 +10,25 @@ public class UserProfile {
     private double peerRating;
     private double co2SavedKg;
     private String fcmToken;
+    private String role = "student"; // "student" or "driver"
 
     public UserProfile() {
     }
 
     public UserProfile(String userId, String displayName, String email, String photoUrl,
                        String academicInfo, int ridesShared, double peerRating, double co2SavedKg) {
-        this(userId, displayName, email, photoUrl, academicInfo, ridesShared, peerRating, co2SavedKg, "");
+        this(userId, displayName, email, photoUrl, academicInfo, ridesShared, peerRating, co2SavedKg, "", "student");
     }
 
     public UserProfile(String userId, String displayName, String email, String photoUrl,
                        String academicInfo, int ridesShared, double peerRating, double co2SavedKg,
                        String fcmToken) {
+        this(userId, displayName, email, photoUrl, academicInfo, ridesShared, peerRating, co2SavedKg, fcmToken, "student");
+    }
+
+    public UserProfile(String userId, String displayName, String email, String photoUrl,
+                       String academicInfo, int ridesShared, double peerRating, double co2SavedKg,
+                       String fcmToken, String role) {
         this.userId = userId;
         this.displayName = displayName;
         this.email = email;
@@ -31,6 +38,7 @@ public class UserProfile {
         this.peerRating = peerRating;
         this.co2SavedKg = co2SavedKg;
         this.fcmToken = fcmToken;
+        this.role = role != null ? role : "student";
     }
 
     public String getUserId() {
@@ -103,5 +111,17 @@ public class UserProfile {
 
     public void setFcmToken(String fcmToken) {
         this.fcmToken = fcmToken;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role != null ? role : "student";
+    }
+
+    public boolean isDriver() {
+        return "driver".equalsIgnoreCase(role);
     }
 }

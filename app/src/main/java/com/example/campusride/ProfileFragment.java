@@ -20,6 +20,8 @@ import com.example.campusride.data.FirestoreRepository;
 import com.example.campusride.model.RideRequest;
 import com.example.campusride.model.UserProfile;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.ListenerRegistration;
 
 import java.util.List;
 import java.util.Locale;
@@ -31,9 +33,10 @@ public class ProfileFragment extends Fragment {
     private TextView tvAcademicInfo;
     private TextView tvRidesShared;
     private TextView tvPeerRating;
-    //private TextView tvCo2Saved;
     private RecyclerView rvProfileHistory;
     private MaterialButton btnSignOut;
+
+    private ListenerRegistration historyListener;
 
     @Nullable
     @Override
@@ -50,7 +53,6 @@ public class ProfileFragment extends Fragment {
         tvAcademicInfo = view.findViewById(R.id.tvAcademicInfo);
         tvRidesShared = view.findViewById(R.id.tvRidesShared);
         tvPeerRating = view.findViewById(R.id.tvPeerRating);
-        //tvCo2Saved = view.findViewById(R.id.tvCo2Saved);
         rvProfileHistory = view.findViewById(R.id.rvProfileHistory);
         btnSignOut = view.findViewById(R.id.btnSignOut);
 
@@ -91,7 +93,6 @@ public class ProfileFragment extends Fragment {
             tvAcademicInfo.setText(fallbackUser.getAcademicInfo());
             tvRidesShared.setText(String.valueOf(fallbackUser.getRidesShared()));
             tvPeerRating.setText(String.format(Locale.US, "%.2f", fallbackUser.getPeerRating()));
-            //tvCo2Saved.setText(String.format(Locale.US, "%.1f kg", fallbackUser.getCo2SavedKg()));
 
             FirestoreRepository.getInstance().getUserProfile(fallbackUser.getUserId(), new FirestoreRepository.FirestoreCallback<UserProfile>() {
                 @Override
@@ -102,7 +103,6 @@ public class ProfileFragment extends Fragment {
                         tvAcademicInfo.setText(user.getAcademicInfo());
                         tvRidesShared.setText(String.valueOf(user.getRidesShared()));
                         tvPeerRating.setText(String.format(Locale.US, "%.2f", user.getPeerRating()));
-                        //tvCo2Saved.setText(String.format(Locale.US, "%.1f kg", user.getCo2SavedKg()));
                     }
                 }
 
@@ -114,7 +114,14 @@ public class ProfileFragment extends Fragment {
     }
 
     private void loadHistory() {
-        FirestoreRepository.getInstance().getRideRequests(new FirestoreRepository.FirestoreCallback<List<RideRequest>>() {
+        FirebaseUser user = AuthRepository.getInstance().getFirebaseUser();
+        if (user == null) return;
+
+        if (historyListener != null) {
+            historyListener.remove();
+        }
+
+        historyListener = FirestoreRepository.getInstance().listenToUserRideRequests(user.getUid(), new FirestoreRepository.FirestoreCallback<List<RideRequest>>() {
             @Override
             public void onSuccess(List<RideRequest> requests) {
                 if (isAdded()) {
@@ -124,7 +131,6 @@ public class ProfileFragment extends Fragment {
                             public void onSuccess(Void result) {
                                 if (isAdded()) {
                                     Toast.makeText(requireContext(), "Request cancelled", Toast.LENGTH_SHORT).show();
-                                    loadHistory();
                                 }
                             }
 
@@ -149,5 +155,14 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (historyListener != null) {
+            historyListener.remove();
+            historyListener = null;
+        }
     }
 }

@@ -40,21 +40,41 @@ public class RideRequestAdapter extends RecyclerView.Adapter<RideRequestAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         RideRequest item = requests.get(position);
 
-        holder.tvStatusBadge.setText(item.getStatus());
         holder.tvSlot.setText("Departure: " + item.getDepartureSlot());
         holder.tvRoute.setText(item.getPickupGate() + " → " + item.getDestinationHub());
-        holder.tvShareInfo.setText(item.isWillingToShare() ? "Willing to share rides" : "Private ride request");
 
-        if ("CANCELLED".equals(item.getStatus())) {
+        String shareText = item.isWillingToShare() ? "Willing to share rides" : "Private ride request";
+        if (item.getDriverId() != null && !item.getDriverId().isEmpty()) {
+            shareText += " • Driver assigned";
+        }
+        holder.tvShareInfo.setText(shareText);
+
+        String status = item.getStatus() != null ? item.getStatus().toUpperCase() : "PENDING";
+        if ("MATCHED".equalsIgnoreCase(status) || "ACCEPTED".equalsIgnoreCase(status) || "CONFIRMED".equalsIgnoreCase(status)) {
+            holder.tvStatusBadge.setText("MATCHED (Driver Assigned)");
+            holder.tvStatusBadge.setBackgroundTintList(holder.itemView.getContext().getColorStateList(R.color.demand_low_bg));
+            holder.tvStatusBadge.setTextColor(holder.itemView.getContext().getColor(R.color.demand_low_text));
+            holder.btnCancel.setVisibility(View.GONE);
+        } else if ("PENDING".equalsIgnoreCase(status)) {
+            holder.tvStatusBadge.setText("PENDING (Waiting for driver)");
+            holder.tvStatusBadge.setBackgroundTintList(holder.itemView.getContext().getColorStateList(R.color.demand_medium_bg));
+            holder.tvStatusBadge.setTextColor(holder.itemView.getContext().getColor(R.color.demand_medium_text));
+            holder.btnCancel.setVisibility(View.VISIBLE);
+        } else if ("CANCELLED".equalsIgnoreCase(status)) {
+            holder.tvStatusBadge.setText("CANCELLED");
+            holder.tvStatusBadge.setBackgroundTintList(holder.itemView.getContext().getColorStateList(R.color.demand_critical_bg));
+            holder.tvStatusBadge.setTextColor(holder.itemView.getContext().getColor(R.color.demand_critical_text));
             holder.btnCancel.setVisibility(View.GONE);
         } else {
-            holder.btnCancel.setVisibility(View.VISIBLE);
-            holder.btnCancel.setOnClickListener(v -> {
-                if (cancelListener != null) {
-                    cancelListener.onCancelClick(item);
-                }
-            });
+            holder.tvStatusBadge.setText(status);
+            holder.btnCancel.setVisibility(View.GONE);
         }
+
+        holder.btnCancel.setOnClickListener(v -> {
+            if (cancelListener != null) {
+                cancelListener.onCancelClick(item);
+            }
+        });
     }
 
     @Override

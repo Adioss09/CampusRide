@@ -10,15 +10,19 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.Transaction;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * Clean integration point for Cloud Firestore operations (ride requests, user profiles, gate demands, transit hubs).
+ * Clean integration point for Cloud Firestore operations (ride requests, user profiles, gate demands, transit hubs, driver workflows).
  */
 public class FirestoreRepository {
 
@@ -179,6 +183,37 @@ public class FirestoreRepository {
                 .addOnFailureListener(e -> {
                     if (callback != null) {
                         callback.onError(e);
+                    }
+                });
+    }
+
+    /**
+     * Real-time Firestore snapshot listener for a student's ride requests.
+     */
+    public ListenerRegistration listenToUserRideRequests(String userId, FirestoreCallback<List<RideRequest>> callback) {
+        return db.collection(RIDE_REQUESTS_COLLECTION)
+                .whereEqualTo("userId", userId)
+                .addSnapshotListener((queryDocumentSnapshots, error) -> {
+                    if (error != null) {
+                        if (callback != null) callback.onError(error);
+                        return;
+                    }
+
+                    List<RideRequest> requests = new ArrayList<>();
+                    if (queryDocumentSnapshots != null) {
+                        for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                            RideRequest req = doc.toObject(RideRequest.class);
+                            if (req != null) {
+                                if (TextUtils.isEmpty(req.getRequestId())) {
+                                    req.setRequestId(doc.getId());
+                                }
+                                requests.add(req);
+                            }
+                        }
+                    }
+                    Collections.sort(requests, (r1, r2) -> Long.compare(r2.getTimestamp(), r1.getTimestamp()));
+                    if (callback != null) {
+                        callback.onSuccess(requests);
                     }
                 });
     }
@@ -399,6 +434,184 @@ public class FirestoreRepository {
                 .addOnFailureListener(e -> {
                     if (callback != null) {
                         callback.onError(e);
+                    }
+                });
+    }
+
+    // ==========================================
+    // DRIVER WORKFLOW METHODS
+    // ==========================================
+
+    /**
+     * Checks if the user is an authorized driver in Firestore.
+     */
+    public void checkIsDriver(String userId, FirestoreCallback<Boolean> callback) {
+        if (TextUtils.isEmpty(userId)) {
+            if (callback != null) callback.onSuccess(false);
+            return;
+        }
+
+        // 1. Check protected collection 'driver_roles/{userId}'
+        db.collection("driver_roles").document(userId).get()
+                .addOnSuccessListener(doc -> {
+                    if (doc.exists()) {
+                        Boolean isDriver = doc.getBoolean("isDriver");
+                        if (isDriver != null && isDriver) {
+                            if (callback != null) callback.onSuccess(true);
+                            return;
+                        }
+                    }
+
+                    // 2. Fallback check 'users/{userId}' document for role == "driver"
+                    db.collection(USERS_COLLECTION).document(userId).get()
+                            .addOnSuccessListener(userDoc -> {
+                                if (userDoc.exists()) {
+                                    String role = userDoc.getString("role");
+                                    if ("driver".equalsIgnoreCase(role)) {
+                                        if (callback != null) callback.onSuccess(true);
+                                        return;
+                                    }
+                                }
+                                if (callback != null) callback.onSuccess(false);
+                            })
+                            .addOnFailureListener(e -> {
+                                if (callback != null) callback.onSuccess(false);
+                            });
+                })
+                .addOnFailureListener(e -> {
+                    if (callback != null) callback.onSuccess(false);
+                });
+    }
+
+    /**
+     * Listens to real-time incoming pending ride requests for driver dashboard.
+     * Filters out requests that were rejected by this driver.
+     */
+    public ListenerRegistration listenToPendingRideRequests(String driverId, FirestoreCallback<List<RideRequest>> callback) {
+        return db.collection(RIDE_REQUESTS_COLLECTION)
+                .whereEqualTo("status", "PENDING")
+                .addSnapshotListener((queryDocumentSnapshots, error) -> {
+                    if (error != null) {
+                        if (callback != null) callback.onError(error);
+                        return;
+                    }
+
+                    List<RideRequest> requests = new ArrayList<>();
+                    if (queryDocumentSnapshots != null) {
+                        for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                            RideRequest req = doc.toObject(RideRequest.class);
+                            if (req != null) {
+                                if (TextUtils.isEmpty(req.getRequestId())) {
+                                    req.setRequestId(doc.getId());
+                                }
+                                List<String> rejected = req.getRejectedDriverIds();
+                                if (driverId != null && rejected != null && rejected.contains(driverId)) {
+                                    continue;
+                                }
+                                requests.add(req);
+                            }
+                        }
+                    }
+                    Collections.sort(requests, (r1, r2) -> Long.compare(r2.getTimestamp(), r1.getTimestamp()));
+                    if (callback != null) {
+                        callback.onSuccess(requests);
+                    }
+                });
+    }
+
+    /**
+     * Atomically claims a ride request for the driver using a Firestore transaction.
+     * Guarantees concurrency safety: prevents two drivers from accepting the same ride.
+     */
+    public void acceptRideRequestTransaction(String requestId, String driverId, FirestoreCallback<Void> callback) {
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser == null || TextUtils.isEmpty(driverId) || !currentUser.getUid().equals(driverId)) {
+            if (callback != null) callback.onError(new Exception("Driver authentication required."));
+            return;
+        }
+
+        if (TextUtils.isEmpty(requestId)) {
+            if (callback != null) callback.onError(new Exception("Invalid request ID."));
+            return;
+        }
+
+        DocumentReference docRef = db.collection(RIDE_REQUESTS_COLLECTION).document(requestId);
+
+        db.runTransaction((Transaction.Function<Void>) transaction -> {
+            DocumentSnapshot snapshot = transaction.get(docRef);
+            if (!snapshot.exists()) {
+                throw new FirebaseFirestoreException("Ride request document does not exist.", FirebaseFirestoreException.Code.NOT_FOUND);
+            }
+
+            String currentStatus = snapshot.getString("status");
+            if (!"PENDING".equalsIgnoreCase(currentStatus)) {
+                throw new FirebaseFirestoreException("Ride is no longer available (already accepted or cancelled).", FirebaseFirestoreException.Code.ABORTED);
+            }
+
+            transaction.update(docRef, "status", "MATCHED");
+            transaction.update(docRef, "driverId", driverId);
+            transaction.update(docRef, "acceptedAt", System.currentTimeMillis());
+
+            return null;
+        }).addOnSuccessListener(aVoid -> {
+            if (callback != null) callback.onSuccess(null);
+        }).addOnFailureListener(e -> {
+            if (callback != null) callback.onError(e);
+        });
+    }
+
+    /**
+     * Records a driver's rejection for a request without cancelling or deleting the ride for the student.
+     */
+    public void rejectRideRequest(String requestId, String driverId, FirestoreCallback<Void> callback) {
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser == null || TextUtils.isEmpty(driverId) || !currentUser.getUid().equals(driverId)) {
+            if (callback != null) callback.onError(new Exception("Driver authentication required."));
+            return;
+        }
+
+        if (TextUtils.isEmpty(requestId)) {
+            if (callback != null) callback.onError(new Exception("Invalid request ID."));
+            return;
+        }
+
+        DocumentReference docRef = db.collection(RIDE_REQUESTS_COLLECTION).document(requestId);
+        docRef.update("rejectedDriverIds", FieldValue.arrayUnion(driverId))
+                .addOnSuccessListener(aVoid -> {
+                    if (callback != null) callback.onSuccess(null);
+                })
+                .addOnFailureListener(e -> {
+                    if (callback != null) callback.onError(e);
+                });
+    }
+
+    /**
+     * Listens to real-time status updates for rides accepted by this driver.
+     */
+    public ListenerRegistration listenToDriverAcceptedRides(String driverId, FirestoreCallback<List<RideRequest>> callback) {
+        return db.collection(RIDE_REQUESTS_COLLECTION)
+                .whereEqualTo("driverId", driverId)
+                .addSnapshotListener((queryDocumentSnapshots, error) -> {
+                    if (error != null) {
+                        if (callback != null) callback.onError(error);
+                        return;
+                    }
+
+                    List<RideRequest> requests = new ArrayList<>();
+                    if (queryDocumentSnapshots != null) {
+                        for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                            RideRequest req = doc.toObject(RideRequest.class);
+                            if (req != null) {
+                                if (TextUtils.isEmpty(req.getRequestId())) {
+                                    req.setRequestId(doc.getId());
+                                }
+                                requests.add(req);
+                            }
+                        }
+                    }
+                    Collections.sort(requests, (r1, r2) -> Long.compare(r2.getTimestamp(), r1.getTimestamp()));
+                    if (callback != null) {
+                        callback.onSuccess(requests);
                     }
                 });
     }

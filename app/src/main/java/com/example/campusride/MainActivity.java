@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
                 selectedFragment = new MapFragment();
             } else if (itemId == R.id.navigation_ride_share) {
                 selectedFragment = new RideShareFragment();
+            } else if (itemId == R.id.navigation_driver) {
+                selectedFragment = new DriverDashboardFragment();
             } else if (itemId == R.id.navigation_profile) {
                 selectedFragment = new ProfileFragment();
             }
@@ -79,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
         syncFcmToken();
         checkNotificationPermission();
 
+        // Check Driver Role & Configure Navigation
+        checkDriverRole(savedInstanceState);
+
         // Set default fragment or handle notification navigation intent
         if (savedInstanceState == null) {
             if (!handleNotificationIntent(getIntent())) {
@@ -86,6 +91,34 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             handleNotificationIntent(getIntent());
+        }
+    }
+
+    private void checkDriverRole(Bundle savedInstanceState) {
+        FirebaseUser user = AuthRepository.getInstance().getFirebaseUser();
+        if (user != null) {
+            FirestoreRepository.getInstance().checkIsDriver(user.getUid(), new FirestoreRepository.FirestoreCallback<Boolean>() {
+                @Override
+                public void onSuccess(Boolean isDriver) {
+                    if (isDriver != null && isDriver && !isFinishing()) {
+                        if (bottomNavigationView != null) {
+                            if (bottomNavigationView.getMenu().findItem(R.id.navigation_driver) != null) {
+                                bottomNavigationView.getMenu().findItem(R.id.navigation_driver).setVisible(true);
+                            }
+                            if (bottomNavigationView.getMenu().findItem(R.id.navigation_ride_share) != null) {
+                                bottomNavigationView.getMenu().findItem(R.id.navigation_ride_share).setVisible(false);
+                            }
+                            if (savedInstanceState == null && (getIntent() == null || !getIntent().hasExtra("navigate_to"))) {
+                                bottomNavigationView.setSelectedItemId(R.id.navigation_driver);
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onError(Exception e) {
+                }
+            });
         }
     }
 

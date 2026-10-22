@@ -2,18 +2,73 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // User Profile security rules
-    match /users/{userId} {
-      allow read: if request.auth != null && request.auth.uid == userId;
-      allow write: if request.auth != null && request.auth.uid == userId;
+    function isAuthenticated() {
+      return request.auth != null;
     }
 
-    // Ride Request security rules
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isDriver() {
+      return isAuthenticated() && (
+        (exists(/databases/$(database)/documents/driver_roles/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/driver_roles/$(request.auth.uid)).data.isDriver == true) ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'driver')
+      );
+    }
+
+    // User profile access: students & drivers
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      // Allow profile creation/update, but regular users cannot set or change role to 'driver'
+      allow create: if isOwner(userId) && (!request.resource.data.keys().hasAll(['role']) || request.resource.data.role != 'driver');
+      allow update: if isOwner(userId) && (!request.resource.data.keys().hasAll(['role']) || request.resource.data.role == resource.data.role);
+    }
+
+    // Protected driver roles collection (only writeable via Firebase Admin SDK or Firebase Console)
+    match /driver_roles/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if false;
+    }
+
+    // Ride request access: students and authorized drivers
     match /ride_requests/{requestId} {
-      allow read: if request.auth != null && (resource == null || resource.data.userId == request.auth.uid);
-      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
-      allow update: if request.auth != null && resource.data.userId == request.auth.uid;
-      allow delete: if request.auth != null && resource.data.userId == request.auth.uid;
+
+      // Read access: students read their own requests or willingToShare rides; Drivers read pending/assigned requests
+      allow read: if isAuthenticated() && (
+        resource == null ||
+        resource.data.userId == request.auth.uid ||
+        resource.data.willingToShare == true ||
+        isDriver()
+      );
+
+      // Create access: students create their own ride requests with initial status 'PENDING'
+      allow create: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.requestId == requestId
+        && request.resource.data.pickupGate is string
+        && request.resource.data.destinationHub is string
+        && request.resource.data.departureSlot is string
+        && request.resource.data.willingToShare is bool
+        && request.resource.data.status == 'PENDING'
+        && request.resource.data.timestamp is int;
+
+      // Update access:
+      // 1. Student owner can cancel their own request
+      // 2. Authorized driver can accept a PENDING request or record a rejection
+      allow update: if isAuthenticated() && (
+        // Student cancellation of their own request
+        (resource.data.userId == request.auth.uid && request.resource.data.userId == request.auth.uid && request.resource.data.status == 'CANCELLED') ||
+        // Driver accepting a pending ride
+        (isDriver() && resource.data.status == 'PENDING' && request.resource.data.status == 'MATCHED' && request.resource.data.driverId == request.auth.uid) ||
+        // Driver recording rejection (status remains PENDING)
+        (isDriver() && resource.data.status == 'PENDING' && request.resource.data.status == 'PENDING')
+      );
+
+      // Delete access: student owner can delete their own request
+      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
     }
   }
 }

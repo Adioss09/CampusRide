@@ -1,5 +1,6 @@
 package com.example.campusride;
 
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -24,28 +25,31 @@ import com.example.campusride.model.UserProfile;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.ListenerRegistration;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class RideShareFragment extends Fragment {
 
     private Spinner spPickupGate;
     private Spinner spDestinationHub;
-    private Spinner spDepartureSlot;
+    private MaterialButton btnSelectDepartureTime;
     private MaterialSwitch switchWillingToShare;
     private MaterialButton btnSubmitRequest;
     private RecyclerView rvRideRequests;
 
+    private ListenerRegistration userRequestsListener;
+
     private final List<String> gateLabels = new ArrayList<>();
     private final List<String> hubLabels = new ArrayList<>();
 
-    private static final String[] SLOTS = {
-            "4:35 PM",
-            "4:50 PM",
-            "5:05 PM",
-            "5:20 PM"
-    };
+    private String selectedDepartureTimeStr;
+    private int selectedHour = -1;
+    private int selectedMinute = -1;
 
     public static RideShareFragment newInstance(String pickupZone, String destinationHub, String departureSlot) {
         RideShareFragment fragment = new RideShareFragment();
@@ -69,12 +73,13 @@ public class RideShareFragment extends Fragment {
 
         spPickupGate = view.findViewById(R.id.spPickupGate);
         spDestinationHub = view.findViewById(R.id.spDestinationHub);
-        spDepartureSlot = view.findViewById(R.id.spDepartureSlot);
+        btnSelectDepartureTime = view.findViewById(R.id.btnSelectDepartureTime);
         switchWillingToShare = view.findViewById(R.id.switchWillingToShare);
         btnSubmitRequest = view.findViewById(R.id.btnSubmitRequest);
         rvRideRequests = view.findViewById(R.id.rvRideRequests);
 
         setupSpinners();
+        btnSelectDepartureTime.setOnClickListener(v -> showTimePicker());
         applyArguments();
 
         rvRideRequests.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -102,10 +107,29 @@ public class RideShareFragment extends Fragment {
         ArrayAdapter<String> hubAdapter = new ArrayAdapter<>(requireContext(), R.layout.item_spinner, hubLabels);
         hubAdapter.setDropDownViewResource(R.layout.item_spinner_dropdown);
         spDestinationHub.setAdapter(hubAdapter);
+    }
 
-        ArrayAdapter<String> slotAdapter = new ArrayAdapter<>(requireContext(), R.layout.item_spinner, SLOTS);
-        slotAdapter.setDropDownViewResource(R.layout.item_spinner_dropdown);
-        spDepartureSlot.setAdapter(slotAdapter);
+    private void showTimePicker() {
+        Calendar cal = Calendar.getInstance();
+        int hour = selectedHour >= 0 ? selectedHour : cal.get(Calendar.HOUR_OF_DAY);
+        int minute = selectedMinute >= 0 ? selectedMinute : cal.get(Calendar.MINUTE);
+
+        TimePickerDialog dialog = new TimePickerDialog(requireContext(), (view, hourOfDay, minuteOfHour) -> {
+            selectedHour = hourOfDay;
+            selectedMinute = minuteOfHour;
+
+            Calendar selectedCal = Calendar.getInstance();
+            selectedCal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            selectedCal.set(Calendar.MINUTE, minuteOfHour);
+
+            SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a", Locale.US);
+            selectedDepartureTimeStr = timeFormat.format(selectedCal.getTime());
+            if (btnSelectDepartureTime != null) {
+                btnSelectDepartureTime.setText("Departure: " + selectedDepartureTimeStr);
+            }
+        }, hour, minute, false);
+
+        dialog.show();
     }
 
     private void applyArguments() {
@@ -124,7 +148,10 @@ public class RideShareFragment extends Fragment {
 
         String departureSlot = args.getString("departureSlot");
         if (!TextUtils.isEmpty(departureSlot)) {
-            spDepartureSlot.post(() -> selectSpinnerMatching(spDepartureSlot, departureSlot));
+            selectedDepartureTimeStr = departureSlot;
+            if (btnSelectDepartureTime != null) {
+                btnSelectDepartureTime.setText("Departure: " + departureSlot);
+            }
         }
     }
 
@@ -150,6 +177,12 @@ public class RideShareFragment extends Fragment {
     private void submitRideRequest() {
         btnSubmitRequest.setEnabled(false);
 
+        if (TextUtils.isEmpty(selectedDepartureTimeStr)) {
+            btnSubmitRequest.setEnabled(true);
+            Toast.makeText(requireContext(), "Please select a departure time.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         FirebaseUser fbUser = AuthRepository.getInstance().getFirebaseUser();
         if (fbUser == null) {
             btnSubmitRequest.setEnabled(true);
@@ -166,7 +199,6 @@ public class RideShareFragment extends Fragment {
 
         String pickup = (String) spPickupGate.getSelectedItem();
         String destination = (String) spDestinationHub.getSelectedItem();
-        String slot = (String) spDepartureSlot.getSelectedItem();
         boolean share = switchWillingToShare.isChecked();
 
         RideRequest request = new RideRequest(
@@ -175,7 +207,7 @@ public class RideShareFragment extends Fragment {
                 userName,
                 pickup,
                 destination,
-                slot,
+                selectedDepartureTimeStr,
                 share,
                 "PENDING",
                 System.currentTimeMillis()
@@ -187,7 +219,6 @@ public class RideShareFragment extends Fragment {
                 if (isAdded()) {
                     btnSubmitRequest.setEnabled(true);
                     Toast.makeText(requireContext(), "Ride-sharing request saved successfully!", Toast.LENGTH_SHORT).show();
-                    loadRideRequests();
                 }
             }
 
@@ -203,7 +234,14 @@ public class RideShareFragment extends Fragment {
     }
 
     private void loadRideRequests() {
-        FirestoreRepository.getInstance().getRideRequests(new FirestoreRepository.FirestoreCallback<List<RideRequest>>() {
+        FirebaseUser user = AuthRepository.getInstance().getFirebaseUser();
+        if (user == null) return;
+
+        if (userRequestsListener != null) {
+            userRequestsListener.remove();
+        }
+
+        userRequestsListener = FirestoreRepository.getInstance().listenToUserRideRequests(user.getUid(), new FirestoreRepository.FirestoreCallback<List<RideRequest>>() {
             @Override
             public void onSuccess(List<RideRequest> requests) {
                 if (isAdded()) {
@@ -213,7 +251,6 @@ public class RideShareFragment extends Fragment {
                             public void onSuccess(Void result) {
                                 if (isAdded()) {
                                     Toast.makeText(requireContext(), "Request cancelled", Toast.LENGTH_SHORT).show();
-                                    loadRideRequests();
                                 }
                             }
 
@@ -238,5 +275,14 @@ public class RideShareFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (userRequestsListener != null) {
+            userRequestsListener.remove();
+            userRequestsListener = null;
+        }
     }
 }

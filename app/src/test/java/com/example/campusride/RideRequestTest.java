@@ -85,4 +85,53 @@ public class RideRequestTest {
         assertEquals("user_abc", userProfile.getUserId());
         assertEquals("sample_fcm_token_123", userProfile.getFcmToken());
     }
+
+    @Test
+    public void testDriverRoleAndAcceptanceWorkflow() {
+        UserProfile driverProfile = new UserProfile(
+                "driver_101",
+                "Campus Driver",
+                "driver@campusride.edu",
+                "",
+                "Verified Campus Shuttle Driver",
+                45,
+                4.98,
+                52.0,
+                "fcm_token_driver_101",
+                "driver"
+        );
+
+        assertTrue(driverProfile.isDriver());
+        assertEquals("driver", driverProfile.getRole());
+
+        RideRequest request = new RideRequest(
+                "req_789",
+                "student_202",
+                "John Doe",
+                "Z4 - DJ Sanghvi Gate",
+                "T1 - DN Nagar Metro Station",
+                "5:05 PM",
+                true,
+                "PENDING",
+                1700000000000L
+        );
+
+        assertEquals("PENDING", request.getStatus());
+
+        // Simulate driver acceptance
+        request.setStatus("MATCHED");
+        request.setDriverId(driverProfile.getUserId());
+        request.setAcceptedAt(1700000005000L);
+
+        assertEquals("MATCHED", request.getStatus());
+        assertEquals("driver_101", request.getDriverId());
+        assertEquals(5000L, request.getAcceptedAt() - 1700000000000L);
+
+        // Simulate driver rejection
+        java.util.List<String> rejections = new java.util.ArrayList<>();
+        rejections.add("driver_999");
+        request.setRejectedDriverIds(rejections);
+
+        assertTrue(request.getRejectedDriverIds().contains("driver_999"));
+    }
 }
